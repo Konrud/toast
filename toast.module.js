@@ -228,7 +228,6 @@ function _removeToast(toastElem, options, toastObj) {
     const toastElement = toastElem;
     const defOptsObj = options;
     const _callback = _isFunction(defOptsObj.closeCallback) ? defOptsObj.closeCallback : function () { };
-    // we call provided callback (if any) & sent `this` as iput parameter
     _callback(toastObj);
     toastElement.parentNode.removeChild(toastElement);
 }

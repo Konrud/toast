@@ -181,24 +181,19 @@ function _addAriaLabels(toastElem) {
     return toastElem;
 }
 
-
 function _hideAndRemoveToast(toastInstance, { hideImmediately = false, ignoreCloseDelay = false } = {}) {
     const toastElement = toastInstance.currentToastElement;
-    if (!toastElement) { console.error("Can not hide toast element due to toast instance has invalid value: " + JSON.stringify(toastInstance)); return; }
+    if (!toastElement) { console.error("Can not hide toast element as toast instance has invalid value: " + JSON.stringify(toastInstance)); return; }
 
     const defOptsObj = toastInstance.options;
-
-    const toastElemObj = {
-        currentToastElement: toastElement,
-        options: toastInstance.options,
-        toastContainer: toastInstance.toastContainer
-    };
 
     if (hideImmediately) {
         requestAnimationFrame(function () {
             _hideToast(toastElement, toastInstance.options);
             requestAnimationFrame(function () {
-                _removeToast(toastInstance);
+                _removeToast(toastElement);
+                invokeCloseCallback(defOptsObj.closeCallback, toastInstance);
+                toastInstance.currentToastElement = _getNextToastElement(toastInstance.toastContainer.children); // get next toast element as a current
             });
         });
         return;
@@ -207,10 +202,12 @@ function _hideAndRemoveToast(toastInstance, { hideImmediately = false, ignoreClo
     const closeDelay = ignoreCloseDelay ? 0 : (defOptsObj.closeAfterSeconds * 1000) + _REVEAL_TOAST_DELAY_IN_MILLISECONDS;
 
     window.setTimeout(function () {
-        _hideToast(toastElement, toastElemObj.options);
+        _hideToast(toastElement, toastInstance.options);
 
         window.setTimeout(function () {
-            _removeToast(toastElement, toastElemObj.options, toastElemObj);// removes element entirely from the page
+            _removeToast(toastElement);// removes element entirely from the page
+            invokeCloseCallback(defOptsObj.closeCallback, toastInstance);
+            toastInstance.currentToastElement = _getNextToastElement(toastInstance.toastContainer.children); // get next toast element as a current
         }, getTransitionDurationAvgTimeInMillSec(toastElement)); // should be larger then transition duration values
 
     }, closeDelay);
@@ -224,12 +221,19 @@ function _hideToast(toastElem, options) {
     toastElement.classList.add(defOptsObj.hideClass);
 };
 
-function _removeToast(toastElem, options, toastObj) {
+function _removeToast(toastElem) {
     const toastElement = toastElem;
-    const defOptsObj = options;
-    const _callback = _isFunction(defOptsObj.closeCallback) ? defOptsObj.closeCallback : function () { };
-    _callback(toastObj);
     toastElement.parentNode.removeChild(toastElement);
+}
+
+function invokeCloseCallback(callback, toastData) {
+    if (_isFunction(callback)) {
+        callback(toastData);
+    }
+}
+
+function _getNextToastElement(toastElements) {
+    return toastElements.item(toastElements.length - 1);
 }
 
 // returns sum of transition duration css property values, for the element, in milliseconds (i.e. each value multiply by 1000)

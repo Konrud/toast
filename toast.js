@@ -129,7 +129,7 @@ Toast.prototype.show = function show(opts) {
 }
 
 Toast.prototype.hide = function hide(hideImmediately) {
-    _hideAndRemoveToast(this, { hideImmediately, ignoreCloseDelay: true });
+    _hideAndRemoveToast(this, { hideImmediately: hideImmediately || false, ignoreCloseDelay: true });
 }
 
 
@@ -182,15 +182,22 @@ function _addAriaLabels(toastElem) {
 }
 
 
-function _hideAndRemoveToast(toastInstance, { hideImmediately, ignoreCloseDelay }) {
+function _hideAndRemoveToast(toastInstance, options) {
     const toastElement = toastInstance.currentToastElement;
+    options = options || {};
     if (!toastElement) { console.error("Can not hide toast element due to toast instance has invalid value: " + JSON.stringify(toastInstance)); return; }
 
     const defOptsObj = toastInstance.options;
 
-    if (hideImmediately) {
+    const toastElemObj = {
+        currentToastElement: toastElement,
+        options: toastInstance.options,
+        toastContainer: toastInstance.toastContainer
+    };
+
+    if (options.hideImmediately) {
         requestAnimationFrame(function () {
-            _hideToast(toastInstance);
+            _hideToast(toastElement, toastInstance.options);
             requestAnimationFrame(function () {
                 _removeToast(toastInstance);
             });
@@ -198,34 +205,32 @@ function _hideAndRemoveToast(toastInstance, { hideImmediately, ignoreCloseDelay 
         return;
     }
 
-    const closeDelay = ignoreCloseDelay ? 0 : (defOptsObj.closeAfterSeconds * 1000) + _REVEAL_TOAST_DELAY_IN_MILLISECONDS;
+    const closeDelay = options.ignoreCloseDelay ? 0 : (defOptsObj.closeAfterSeconds * 1000) + _REVEAL_TOAST_DELAY_IN_MILLISECONDS;
 
     window.setTimeout(function () {
         _hideToast(toastInstance);
 
         window.setTimeout(function () {
-            _removeToast(toastInstance);// removes element entirely from the page
+            _removeToast(toastElement, toastElemObj.options, toastElemObj);// removes element entirely from the page
         }, getTransitionDurationAvgTimeInMillSec(toastElement)); // should be larger then transition duration values
 
     }, closeDelay);
 };
 
 
-function _hideToast(toastInstance) {
-    const defOptsObj = toastInstance.options;
-    const toastElement = toastInstance.currentToastElement;
+function _hideToast(toastElem, options) {
+    const toastElement = toastElem;
+    const defOptsObj = options;
     toastElement.classList.remove(defOptsObj.showClass); // hides element (with animation) from the page
     toastElement.classList.add(defOptsObj.hideClass);
 };
 
-function _removeToast(toastInstance) {
-    const defOptsObj = toastInstance.options;
-    const toastElement = toastInstance.currentToastElement;
+function _removeToast(toastElem, options, toastObj) {
+    const toastElement = toastElem;
+    const defOptsObj = options;
     const _callback = _isFunction(defOptsObj.closeCallback) ? defOptsObj.closeCallback : function () { };
-    // we call provided callback (if any) & sent `this` as iput parameter
-    _callback(toastInstance);
+    _callback(toastObj);
     toastElement.parentNode.removeChild(toastElement);
-    toastInstance.currentToastElement = null;
 }
 
 // returns sum of transition duration css property values, for the element, in milliseconds (i.e. each value multiply by 1000)

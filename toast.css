@@ -1,0 +1,157 @@
+/*===================================
+  TOASTS CONTAINER
+===================================*/
+.c-toasts-container {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    min-width: 250px;
+    width: 100%;
+    max-width: 100%;
+    min-height: 100px;
+    pointer-events: none;
+    box-sizing: border-box;
+    z-index: 9999;
+  }
+  
+  .c-toasts-container *,
+  .c-toasts-container *::before,
+  .c-toasts-container *::after {
+    box-sizing: inherit;
+  }
+
+  @media screen and (min-width: 600px) {
+    .c-toasts-container {
+        max-width: 50%;
+    }
+    /* POSITIONS
+    -------------------*/
+    .c-toasts-container--left {
+        left: .5em;
+    }
+      
+    .c-toasts-container--right {
+        right: .5em;
+    }
+}
+  
+  /*===================================
+    TOAST
+  ===================================*/
+  .c-toast {
+    opacity: 0;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+    min-height: 50px;
+    margin-bottom: 1em;
+    border-radius: 0.3em;
+    background: rgba(42, 44, 46, 0.98);
+    color: rgba(248, 248, 248, 1);
+    line-height: 1.5;
+    box-shadow: 0 2px 8px -2px rgba(0, 0, 0, .3);
+    pointer-events: all;
+    transition: transform .7s, opacity .6s .2s;
+  }
+
+  /* .c-toast.panning {
+    user-select: none;
+    transition: transform .1s ease, opacity .2s;
+  } */
+
+  /* .c-toast.panning * {
+    pointer-events: none;
+  } */
+
+  /*align toast to the right*/
+  .c-toasts-container--right .c-toast {
+      right: 0;
+  }
+  
+  /*--> FROM TOP <--*/
+  .c-toasts-container--from-top .c-toast {
+    /* top: 0; */
+    /* transform: translateY(-10%); */
+    top: -100%;
+    /* transition: top .4s, transform .7s .2s, opacity .6s .2s; */
+    transition: top .4s, opacity .6s .2s;
+  }
+  
+  /*--> FROM BOTTOM <--*/
+  .c-toasts-container--from-bottom .c-toast {
+    /* bottom: 0; */
+    bottom: -100%;
+    /* transform: translateY(40%); */
+    /* transition: bottom .4s, transform .7s .2s, opacity .6s .2s; */
+    transition: bottom .4s, opacity .6s .2s;
+  }
+  
+  /* TOAST VISIBLE
+  --------------------*/
+  .c-toast--visible {
+    opacity: .9;
+  }
+  
+  /*--> FROM TOP <--*/
+  .c-toasts-container--from-top .c-toast--visible {
+    /* transform: translateY(30%); */
+    top: 1%;
+  }
+
+  /*--> FROM BOTTOM <--*/
+  .c-toasts-container--from-bottom .c-toast--visible {
+    /* transform: translateY(-10%); */
+    bottom: 1%;
+  }
+  
+  /* TOAST HIDDEN
+  --------------------*/
+  .c-toast--hidden {
+    opacity: 0;
+  }
+  
+  /*--> FROM BOTTOM <--*/
+  .c-toasts-container--from-bottom .c-toast--hidden {
+    transform: translateY(-40%);
+  }
+  
+  /*--> FROM TOP <--*/
+  .c-toasts-container--from-top .c-toast--hidden {
+    transform: translateY(60%);
+  }
+  
+  /* STYLES
+  -----------------*/
+  .c-toast--green {
+    background: rgba(187, 238, 189, 0.6);
+    color: rgb(3, 34, 5);
+  }
+
+  .c-toast--red {
+    background: rgb(237, 121, 143, 0.6);
+    color: rgb(48, 9, 9);
+  }
+  
+  /*===================================
+    TOAST TITLE
+  ===================================*/
+  .c-toast__title {
+    margin: 0;
+    padding: .7em 1em 0;
+  }
+
+  .c-toast__title:empty {
+    display: none;
+  }
+
+  /*===================================
+    TOAST CONTENT
+  ===================================*/
+  .c-toast__content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: .5em 1em;
+  }

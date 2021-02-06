@@ -54,9 +54,6 @@ class Toast {
         // EXTERNAL PROPERTIES for the further use
         this.options = defOptsObj;
         this.toastContainer = toastsContainer;
-
-        /// returns Toast object with default/changed options, container for toasts and Show method
-        // return { Show: setToast, options: defOptsObj, toastContainer: toastsContainer };
     }
 
     show(opts) {
@@ -80,51 +77,6 @@ class Toast {
         }
 
         const toastElement = _getToastElement(toastClasses);
-
-
-        /*TEST */
-        // function throttle(action) {
-        //     var isActive = false;
-        //     return function (e) {
-        //         if (isActive) return;
-        //         isActive = true;
-        //         requestAnimationFrame(function () {
-        //             action(e);
-        //             isActive = false;
-        //         });
-        //     }
-        // };
-
-        // toastElement.addEventListener("mousedown", function (e) {
-        //     //debugger;
-        //     e.currentTarget.classList.add("panning");
-        // });
-
-        // toastElement.addEventListener("mouseup", function (e) {
-        //     //debugger;
-        //     e.currentTarget.classList.remove("panning");
-        // });
-
-        // toastElement.addEventListener("mouseleave", function (e) {
-        //     //debugger;
-        //     e.currentTarget.classList.remove("panning");
-        // });
-
-        // function onMouseMove(e) {
-        //     //debugger;
-        //     if (!e.target.classList.contains("panning")) return;
-        //     const toast = e.target;
-        //     debugger;
-        //     //const x = e.offsetX;
-        //     // const signedX = e.movementX < 0 ? (x * -1) : x;
-        //     const currentTransformValue = parseFloat(toast.style?.transform?.match(/\((-?\d+)px\)/)?.[1] || 0);
-        //     const signedX = e.movementX < 0 ? -3 : 3;
-        //     toast.style.transform = "translateX(" + (currentTransformValue + signedX) + "px)";
-        // }
-
-        // toastElement.addEventListener("mousemove", onMouseMove);
-
-        /*END TEST */
 
         this.currentToastElement = toastElement;
 
@@ -230,15 +182,21 @@ function _addAriaLabels(toastElem) {
 }
 
 
-function _hideAndRemoveToast(toastInstance, { hideImmediately, ignoreCloseDelay }) {
+function _hideAndRemoveToast(toastInstance, { hideImmediately = false, ignoreCloseDelay = false } = {}) {
     const toastElement = toastInstance.currentToastElement;
     if (!toastElement) { console.error("Can not hide toast element due to toast instance has invalid value: " + JSON.stringify(toastInstance)); return; }
 
     const defOptsObj = toastInstance.options;
 
+    const toastElemObj = {
+        currentToastElement: toastElement,
+        options: toastInstance.options,
+        toastContainer: toastInstance.toastContainer
+    };
+
     if (hideImmediately) {
         requestAnimationFrame(function () {
-            _hideToast(toastInstance);
+            _hideToast(toastElement, toastInstance.options);
             requestAnimationFrame(function () {
                 _removeToast(toastInstance);
             });
@@ -249,31 +207,30 @@ function _hideAndRemoveToast(toastInstance, { hideImmediately, ignoreCloseDelay 
     const closeDelay = ignoreCloseDelay ? 0 : (defOptsObj.closeAfterSeconds * 1000) + _REVEAL_TOAST_DELAY_IN_MILLISECONDS;
 
     window.setTimeout(function () {
-        _hideToast(toastInstance);
+        _hideToast(toastElement, toastElemObj.options);
 
         window.setTimeout(function () {
-            _removeToast(toastInstance);// removes element entirely from the page
+            _removeToast(toastElement, toastElemObj.options, toastElemObj);// removes element entirely from the page
         }, getTransitionDurationAvgTimeInMillSec(toastElement)); // should be larger then transition duration values
 
     }, closeDelay);
 };
 
 
-function _hideToast(toastInstance) {
-    const defOptsObj = toastInstance.options;
-    const toastElement = toastInstance.currentToastElement;
+function _hideToast(toastElem, options) {
+    const toastElement = toastElem;
+    const defOptsObj = options;
     toastElement.classList.remove(defOptsObj.showClass); // hides element (with animation) from the page
     toastElement.classList.add(defOptsObj.hideClass);
 };
 
-function _removeToast(toastInstance) {
-    const defOptsObj = toastInstance.options;
-    const toastElement = toastInstance.currentToastElement;
+function _removeToast(toastElem, options, toastObj) {
+    const toastElement = toastElem;
+    const defOptsObj = options;
     const _callback = _isFunction(defOptsObj.closeCallback) ? defOptsObj.closeCallback : function () { };
     // we call provided callback (if any) & sent `this` as iput parameter
-    _callback(toastInstance);
+    _callback(toastObj);
     toastElement.parentNode.removeChild(toastElement);
-    toastInstance.currentToastElement = null;
 }
 
 // returns sum of transition duration css property values, for the element, in milliseconds (i.e. each value multiply by 1000)

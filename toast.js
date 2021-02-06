@@ -1,4 +1,5 @@
-
+(function (globalNamespace) { // globalNamespace to which we can bind our Toast object
+  "use strict";
 const _TOAST_DIRECTIONS = {
     FROM_BOTTOM: "from-bottom",
     FROM_TOP: "from-top"
@@ -251,3 +252,8 @@ function getTransitionDurationAvgTimeInMillSec(el) {
 function _isFunction(param) {
     return typeof param === "function";
 };
+    
+  // add Toast to the provided object  
+  globalNamespace.Toast = Toast;
+})(window.toastNs || window);
+

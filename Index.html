@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="./toast.css">
+    <link rel="stylesheet" href="toast.css">
     <meta nam="author" content="Konstantin Rouda">
     <title>Toast Component Test Page</title>
 </head>
@@ -13,8 +13,29 @@
     </main>
 
 
+    
 
+    <script type="module">
+      import Toast from "./toast.module.js";
+    
+      const openToastBtn = document.getElementById("openToast");
+      openToastBtn.addEventListener("click", onOpenToastBtnClick);
+        
+      const myToast = new Toast({closeCallback: toastCloseCallback, direction: "from-bottom", position: "left" });
 
-    <script src="./main.js" type="module"></script>
+      function toastCloseCallback(toastInstance) {
+        console.log("From toastCloseCallback");
+      };
+
+      // const toastContent = `<span>I am toast content Very Long One Might Be even too long</span><p style="margin: 0;">I don't know what do you mean by being too long, maybe it's not what I've meant</p><button class="btn-flat toast-action">Undo</button>`;
+
+      const toastContent = "User has been successfully created";
+
+      function onOpenToastBtnClick(e) {
+        myToast.show({ content: toastContent, /* customClasses: ["my-toast", "c-toast--green"], */});
+      }
+
+      window.myToast = myToast;  
+    </script>
 </body>
 </html>

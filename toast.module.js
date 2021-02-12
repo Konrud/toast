@@ -19,6 +19,7 @@ const _TOAST_DEFAULT_OPTIONS = { // toast object with predefined options
     hideClass: "c-toast--hidden",
     closeAfterSeconds: 10, // PUBLIC
     isAutoClose: true, // PUBLIC
+    beforeCloseCallback: null, // PUBLIC
     closeCallback: null // PUBLIC
 };
 
@@ -37,7 +38,8 @@ class Toast {
      *  @property {Array} customClasses - Array contains custom classes or predefined style classes for the toast element (Example: "my-toast c-toast--green my-blue-toast")
      *  @property {Number} closeAfterSeconds - Duration, in seconds, after which Toast element will be closed, if `isAutoClose` property is FALSE. [default value: `10 seconds`]
      *  @property {Boolean} isAutoClose - Determines whether Toast element should be auto closed. [default value: `TRUE`]
-     *  @property {Function} closeCallback - Callback function that will be called after Toast element has been closed and before it is removed from the DOM.
+     *  @property {Function} beforeCloseCallback - Callback function that will be called when Toast element is going to be closed and removed from the DOM.
+     *  @property {Function} closeCallback - Callback function that will be called after Toast element has been closed and removed from the DOM.
      */
     constructor(opts) {
         const defOptsObj = Object.assign({}, _TOAST_DEFAULT_OPTIONS, opts); // gets option value from received options object or from predefined options
@@ -92,17 +94,17 @@ class Toast {
         if (lastAddedToastStyleData) { /// set toast's top position (starts with the second Toast in the toast container)       
             const heightValue = parseFloat(lastAddedToastStyleData.height);
             const marginBottomValue = parseFloat(lastAddedToastStyleData.marginBottom);
-            const currentOffset = heightValue + marginBottomValue;
+            const currentOffset = heightValue + (marginBottomValue * 2);
 
             if (defOptsObj.direction === _TOAST_DIRECTIONS.FROM_BOTTOM) {
                 for (let i = toastsContainer.children.length - 1, j = 1; i >= 0; i--, j++) {
                     const toastElem = toastsContainer.children[i];
-                    toastElem.style.bottom = (currentOffset * (j) + 5) + "px";
+                    toastElem.style.bottom = (currentOffset * (j)) + "px";
                 };
             } else { // from-top
                 for (let i = 0; i < toastsContainer.children.length; i++) {
                     const toastElem = toastsContainer.children[i];
-                    toastElem.style.top = (currentOffset * (i + 1) + 5) + "px";
+                    toastElem.style.top = (currentOffset * (i + 1)) + "px";
                 };
             }
         };
@@ -189,6 +191,7 @@ function _hideAndRemoveToast(toastInstance, { hideImmediately = false, ignoreClo
 
     if (hideImmediately) {
         requestAnimationFrame(function () {
+            invokeBeforeCloseCallback(defOptsObj.beforeCloseCallback, toastInstance);
             _hideToast(toastElement, toastInstance.options);
             requestAnimationFrame(function () {
                 _removeToast(toastElement);
@@ -202,6 +205,7 @@ function _hideAndRemoveToast(toastInstance, { hideImmediately = false, ignoreClo
     const closeDelay = ignoreCloseDelay ? 0 : (defOptsObj.closeAfterSeconds * 1000) + _REVEAL_TOAST_DELAY_IN_MILLISECONDS;
 
     window.setTimeout(function () {
+        invokeBeforeCloseCallback(defOptsObj.beforeCloseCallback, toastInstance);
         _hideToast(toastElement, toastInstance.options);
 
         window.setTimeout(function () {
@@ -224,6 +228,12 @@ function _hideToast(toastElem, options) {
 function _removeToast(toastElem) {
     const toastElement = toastElem;
     toastElement.parentNode.removeChild(toastElement);
+}
+
+function invokeBeforeCloseCallback(callback, toastData) {
+    if (_isFunction(callback)) {
+        callback(toastData);
+    }
 }
 
 function invokeCloseCallback(callback, toastData) {

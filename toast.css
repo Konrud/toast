@@ -55,6 +55,12 @@
     transition: transform .7s, opacity .6s .2s;
   }
 
+  @media screen and (min-width: 850px) {
+    .c-toast {
+      margin-bottom: 0.5em;
+    }
+  }
+
   /*align toast to the right*/
   .c-toasts-container--right .c-toast {
       right: 0;

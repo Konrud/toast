@@ -6,22 +6,29 @@
     <link rel="stylesheet" href="toast.css">
     <meta nam="author" content="Konstantin Rouda">
     <title>Toast Component Test Page</title>
+    <style>
+     BODY {
+       margin: 0;
+     }
+
+     MAIN {
+       position: relative;
+       z-index: 99999;
+     }
+    </style>
 </head>
 <body>
     <main id="root">
         <button id="openToast">Open toast</button>
     </main>
 
-
     
-
-    <script type="module">
-      import Toast from "./toast.module.js";
-    
+    <script src="toast.js"></script>
+    <script>  
       const openToastBtn = document.getElementById("openToast");
       openToastBtn.addEventListener("click", onOpenToastBtnClick);
         
-      const myToast = new Toast({closeCallback: toastCloseCallback, direction: "from-bottom", position: "left" });
+      const myToast = new window.Toast({closeCallback: toastCloseCallback, direction: "from-bottom", position: "left" });
 
       function toastCloseCallback(toastInstance) {
         console.log("From toastCloseCallback");

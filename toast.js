@@ -21,7 +21,9 @@ const _TOAST_DEFAULT_OPTIONS = { // toast object with predefined options
     closeAfterSeconds: 10, // PUBLIC
     isAutoClose: true, // PUBLIC
     beforeCloseCallback: null, // PUBLIC
-    closeCallback: null // PUBLIC
+    closeCallback: null, // PUBLIC
+    useKeyboardShortcutToClose: true, // PUBLIC
+    keyboardShortcutKey: "x", // PUBLIC
 };
 
 // set time after which element will be given class to reveal it
@@ -40,6 +42,9 @@ const _REVEAL_TOAST_DELAY_IN_MILLISECONDS = 5;
  *  @property {Boolean} isAutoClose - Determines whether Toast element should be auto closed. [default value: `TRUE`]
  *  @property {Function} beforeCloseCallback - Callback function that will be called when Toast element is going to be closed and removed from the DOM.
  *  @property {Function} closeCallback - Callback function that will be called after Toast element has been closed and removed from the DOM.
+ *  @property {Boolean} useKeyboardShortcutToClose - Determines whether it is possible to close Toast element using keyboard shortcut. [default falue: `TRUE`]
+ *  @property {String} keyboardShortcutKey - Key to use to close Toast element using keyboard. This key will be used in combination with the `Ctrl` key. [default value: `x`]
+ *  NOTE: this key symbol should be the one of the permited symbols for `KeyboardEvent.key` property (@see https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key).
  */
 function Toast(opts) {
     const defOptsObj = Object.assign({}, _TOAST_DEFAULT_OPTIONS, opts); // gets option value from received options object or from predefined options
@@ -56,10 +61,21 @@ function Toast(opts) {
     // EXTERNAL PROPERTIES for the further use
     this.options = defOptsObj;
     this.toastContainer = toastsContainer;
+  
+    if (defOptsObj.useKeyboardShortcutToClose) {
+        document.body.addEventListener("keydown", this.__closeOnKeyboardShortcutHandler.bind(this), true);
+    }
 }
 
 /* =====    PROTOTYPE METHODS   ===== */
-
+Toast.prototype.__closeOnKeyboardShortcutHandler = function __closeOnKeyboardShortcutHandler(e) {
+    if (!(this.options && this.options.useKeyboardShortcutToClose)) return;
+  
+    if (e.ctrlKey && e.key === this.options.keyboardShortcutKey) {
+        this.hide();
+    }
+}
+  
 Toast.prototype.show = function show(opts) {
     if (this == undefined) { return; } /// we check it against undefined using == equality because we wannt to take into account null which in this case will be equal to undefined. (null == undefined) // --> true
     const defOptsObj = Object.assign({}, this.options, opts); // default options for this instance

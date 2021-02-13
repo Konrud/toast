@@ -18,7 +18,7 @@ const _TOAST_DEFAULT_OPTIONS = { // toast object with predefined options
     showClass: "c-toast--visible",
     hideClass: "c-toast--hidden",
     closeAfterSeconds: 10, // PUBLIC
-    isAutoClose: true, // PUBLIC
+    isAutoClosed: true, // PUBLIC
     beforeCloseCallback: null, // PUBLIC
     closeCallback: null, // PUBLIC
     useKeyboardShortcutToClose: true, // PUBLIC
@@ -38,8 +38,8 @@ class Toast {
      *  @property {String} title - String contains title text of the Toast component.
      *  @property {String} content - String contains content for the Toast component, string may contain plain text or HTML markup that will be parsed and displayed
      *  @property {Array} customClasses - Array contains custom classes or predefined style classes for the toast component (Example: "my-toast c-toast--green my-blue-toast")
-     *  @property {Number} closeAfterSeconds - Duration, in seconds, after which Toast component will be closed, if `isAutoClose` property is TRUE. [default value: `10 seconds`]
-     *  @property {Boolean} isAutoClose - Determines whether Toast component should be auto closed. [default value: `TRUE`]
+     *  @property {Number} closeAfterSeconds - Duration, in seconds, after which Toast component will be closed, if `isAutoClosed` property is TRUE. [default value: `10 seconds`]
+     *  @property {Boolean} isAutoClosed - Determines whether Toast component should be auto closed. [default value: `TRUE`]
      *  @property {Function} beforeCloseCallback - Callback function that will be called when Toast component is going to be closed and removed from the DOM.
      *  @property {Function} closeCallback - Callback function that will be called after Toast component has been closed and removed from the DOM.
      *  @property {Boolean} useKeyboardShortcutToClose - Determines whether it is possible to close Toast component using keyboard shortcut. [default falue: `TRUE`]
@@ -126,7 +126,7 @@ class Toast {
             }
         };
 
-        if (defOptsObj.isAutoClose) {
+        if (defOptsObj.isAutoClosed) {
             _hideAndRemoveToast(this);
         };
 

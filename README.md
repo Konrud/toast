@@ -69,7 +69,7 @@ function onOpenToastBtnClick(e) {
   **NOTE:** The following options can be passed during the initialization (when Toast constructor is being called) or during each call to the `show` method. Some properties, though, can be set only during initialization as changing them after it will brake the proper behavior of the Toast component.
   
   ### position `[optional]` | `(type: String)` | `[default value: left]`
-  Position of the Toast element's container on the page. Should be set only during initialization state (when the `Toast` constructor is called). 
+  Position of the Toast component's container on the page. Should be set only during initialization state (when the `Toast` constructor is called). 
   
   Valid values are: 
   
@@ -84,7 +84,7 @@ function onOpenToastBtnClick(e) {
   ```
   
   ### direction `[optional]` | `(type: String)` | `[default value: from-bottom]`
-  Direction from which Toast element will appear. Should be set only during initialization state (when the `Toast` constructor is called). 
+  Direction from which Toast component will appear. Should be set only during initialization state (when the `Toast` constructor is called). 
   
   Valid values are: 
   
@@ -99,7 +99,7 @@ function onOpenToastBtnClick(e) {
   ```
   
   ### title `[optional]` | `(type: String)` | `[default value: ""]`
-  String contains title text of the Toast element. Can be set both during initialization and when `show` method is called. 
+  String contains title text of the Toast component. Can be set both during initialization and when `show` method is called. 
   
   **Example**
   ```javascript
@@ -112,7 +112,7 @@ function onOpenToastBtnClick(e) {
   ```
   
   ### content `(type: String)` | `[default value: ""]`
-  String contains content for the Toast element, string may contain plain text or HTML markup that will be parsed and displayed. Can be set both during initialization and when `show` method is called. 
+  String contains content for the Toast component, string may contain plain text or HTML markup that will be parsed and displayed. Can be set both during initialization and when `show` method is called. 
   
   **Example**
   ```javascript
@@ -133,7 +133,7 @@ function onOpenToastBtnClick(e) {
   ```
   
   ### customClasses `[optional]` | `(type: Array)` | `[default value: undefined]`
-  Array contains custom classes (predefined style classes) for the Toast component (e.g. `my-toast c-toast--green my-blue-toast`). Can be set both during initialization and when `show` method is called. 
+  Array contains custom classes (predefined style classes) for the Toast component (e.g. `my-toast c-toast--green...`). Can be set both during initialization and when `show` method is called. 
   
   **Example**
   ```javascript

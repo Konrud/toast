@@ -26,24 +26,24 @@ const _TOAST_DEFAULT_OPTIONS = { // toast object with predefined options
     keyboardShortcutKey: "x", // PUBLIC
 };
 
-// set time after which element will be given class to reveal it
+// set time after which component will be given class to reveal it
 const _REVEAL_TOAST_DELAY_IN_MILLISECONDS = 5;
 
 /**
- * @param {Object} opts - Options for the current instance of the Toast element
- *  @property {String} position - Position of the Toast element's container on the page. 
+ * @param {Object} opts - Options for the current instance of the Toast component
+ *  @property {String} position - Position of the Toast component's container on the page. 
  *  Valid values are: "left" (container appears on the left), "right" (container appears on the right) [default value: `left`]
- *  @property {String} direction - Direction from which Toast element will appear. 
+ *  @property {String} direction - Direction from which Toast component will appear. 
  *  Valid values are: "from-bottom"/"from-top" [default value: `from-bottom`]
- *  @property {String} title - String contains title text of the Toast element.
- *  @property {String} content - String contains content for the Toast element, string may contain plain text or HTML markup that will be parsed and displayed
- *  @property {Array} customClasses - Array contains custom classes or predefined style classes for the toast element (Example: "my-toast c-toast--green my-blue-toast")
- *  @property {Number} closeAfterSeconds - Duration, in seconds, after which Toast element will be closed, if `isAutoClose` property is TRUE. [default value: `10 seconds`]
- *  @property {Boolean} isAutoClose - Determines whether Toast element should be auto closed. [default value: `TRUE`]
- *  @property {Function} beforeCloseCallback - Callback function that will be called when Toast element is going to be closed and removed from the DOM.
- *  @property {Function} closeCallback - Callback function that will be called after Toast element has been closed and removed from the DOM.
- *  @property {Boolean} useKeyboardShortcutToClose - Determines whether it is possible to close Toast element using keyboard shortcut. [default falue: `TRUE`]
- *  @property {String} keyboardShortcutKey - Key to use to close Toast element using keyboard. This key will be used in combination with the `Ctrl` key. [default value: `x`]
+ *  @property {String} title - String contains title text of the Toast component.
+ *  @property {String} content - String contains content for the Toast component, string may contain plain text or HTML markup that will be parsed and displayed
+ *  @property {Array} customClasses - Array contains custom classes or predefined style classes for the toast component (Example: "my-toast c-toast--green my-blue-toast")
+ *  @property {Number} closeAfterSeconds - Duration, in seconds, after which Toast component will be closed, if `isAutoClose` property is TRUE. [default value: `10 seconds`]
+ *  @property {Boolean} isAutoClose - Determines whether Toast component should be auto closed. [default value: `TRUE`]
+ *  @property {Function} beforeCloseCallback - Callback function that will be called when Toast component is going to be closed and removed from the DOM.
+ *  @property {Function} closeCallback - Callback function that will be called after Toast component has been closed and removed from the DOM.
+ *  @property {Boolean} useKeyboardShortcutToClose - Determines whether it is possible to close Toast component using keyboard shortcut. [default falue: `TRUE`]
+ *  @property {String} keyboardShortcutKey - Key to use to close Toast component using keyboard. This key will be used in combination with the `Ctrl` key. [default value: `x`]
  *  NOTE: this key symbol should be the one of the permitted symbols for `KeyboardEvent.key` property (@see https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key).
  */
 function Toast(opts) {

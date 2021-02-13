@@ -146,7 +146,7 @@ function onOpenToastBtnClick(e) {
   ``` 
   
   ### closeAfterSeconds `[optional]` | `(type: Number)` | `[default value: 10]`
-  Duration, in seconds, after which Toast component will be closed, if `isAutoClose` property is set to `TRUE`. Can be set both during initialization and when `show` method is called. 
+  Duration, in seconds, after which Toast component will be closed, if `isAutoClosed` property is set to `TRUE`. Can be set both during initialization and when `show` method is called. 
   
   **Example**
   ```javascript
@@ -158,16 +158,16 @@ function onOpenToastBtnClick(e) {
   
   ``` 
   
-  ### isAutoClose `[optional]` | `(type: Boolean)` | `[default value: TRUE]`
+  ### isAutoClosed `[optional]` | `(type: Boolean)` | `[default value: TRUE]`
   Determines whether Toast component should be auto closed, according to the time set in `closeAfterSeconds` property. Can be set both during initialization and when `show` method is called. 
   
   **Example**
   ```javascript
   // Set during initialization
-  const myToast = new Toast({ isAutoClose: false });
+  const myToast = new Toast({ isAutoClosed: false });
   
   // Set when `show` method is called
-  myToast.show({ isAutoClose: false });
+  myToast.show({ isAutoClosed: false });
   
   ``` 
   

@@ -66,7 +66,7 @@ function onOpenToastBtnClick(e) {
 
 ## Initialization Options
   
-  **NOTE:** The following options can be passed during the initialization (when Toast construction is being called) or during each call to the `show` method. Some properties, though, can be set only during initialization as changing them after it will brake the proper behavior of the Toast component.
+  **NOTE:** The following options can be passed during the initialization (when Toast constructor is being called) or during each call to the `show` method. Some properties, though, can be set only during initialization as changing them after it will brake the proper behavior of the Toast component.
   
   ### position `[optional]` | `(type: String)` | `[default value: left]`
   Position of the Toast element's container on the page. Should be set only during initialization state (when the `Toast` constructor is called). 

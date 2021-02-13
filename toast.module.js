@@ -263,8 +263,10 @@ function _getNextToastElement(toastElements) {
     return toastElements.item(toastElements.length - 1);
 }
 
-// returns sum of transition duration css property values, for the element, in milliseconds (i.e. each value multiply by 1000)
-/// <param name="el" type="HTMLElement">Element from which transitionDuration, css property, should be read</param>
+/* Gets sum of the transition duration css property values, for the Toast component, in milliseconds (each value is multiplied by 1000)
+ * @param {HTMLElement} el - Element from which `transitionDuration`, css property, should be read
+ * @return {Number} - Sum of all values for `transitionDuration` property set on the Toast component.
+*/
 function getTransitionDurationAvgTimeInMillSec(el) {
     const resultArr = window.getComputedStyle(el).transitionDuration.match(/(\d+.\d+)/gi); // gets only numbers from property e.g. "0.7s, 0.6s" 
     let resultNum = 0;

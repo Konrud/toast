@@ -44,7 +44,7 @@ class Toast {
      *  @property {Function} closeCallback - Callback function that will be called after Toast element has been closed and removed from the DOM.
      *  @property {Boolean} useKeyboardShortcutToClose - Determines whether it is possible to close Toast element using keyboard shortcut. [default falue: `TRUE`]
      *  @property {String} keyboardShortcutKey - Key to use to close Toast element using keyboard. This key will be used in combination with the `Ctrl` key. [default value: `x`]
-     *  NOTE: this key symbol should be the one of the permited symbols for `KeyboardEvent.key` property (@see https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key).
+     *  NOTE: this key symbol should be the one of the permitted symbols for `KeyboardEvent.key` property (@see https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key).
      */
     constructor(opts) {
         const defOptsObj = Object.assign({}, _TOAST_DEFAULT_OPTIONS, opts); // gets option value from received options object or from predefined options

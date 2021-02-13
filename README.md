@@ -2,4 +2,4 @@
 Toast component
 
 ## Preview
-[You can see it live](https://github.com/Konrud/toast/Index.html)
+[You can see it live](https://konrud.github.io/toast/Index.html)

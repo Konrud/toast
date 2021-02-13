@@ -38,7 +38,7 @@ const _REVEAL_TOAST_DELAY_IN_MILLISECONDS = 5;
  *  @property {String} title - String contains title text of the Toast element.
  *  @property {String} content - String contains content for the Toast element, string may contain plain text or HTML markup that will be parsed and displayed
  *  @property {Array} customClasses - Array contains custom classes or predefined style classes for the toast element (Example: "my-toast c-toast--green my-blue-toast")
- *  @property {Number} closeAfterSeconds - Duration, in seconds, after which Toast element will be closed, if `isAutoClose` property is FALSE. [default value: `10 seconds`]
+ *  @property {Number} closeAfterSeconds - Duration, in seconds, after which Toast element will be closed, if `isAutoClose` property is TRUE. [default value: `10 seconds`]
  *  @property {Boolean} isAutoClose - Determines whether Toast element should be auto closed. [default value: `TRUE`]
  *  @property {Function} beforeCloseCallback - Callback function that will be called when Toast element is going to be closed and removed from the DOM.
  *  @property {Function} closeCallback - Callback function that will be called after Toast element has been closed and removed from the DOM.

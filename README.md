@@ -6,11 +6,11 @@ Toast component (using HTML, CSS, JS)
 
 
 ## Summary
-Toast component can hold either plain text or any HTML markup and can be called
+Toast component can receive either plain text or any HTML markup and can be called
 any time a message should be displayed on the screen.
 
 ## How to use
-Download [`toast.module.js`](toast.module.js), if you use modules in your code, or [`toast.js`](toast.js) if you use plain JS files approach. Link it in your HTML document, or in case you use modules you can import it in you main entery point file. You don't need to create any HTML markup for this toast in your HTML. When Toast component intialized, by calling Toast constructor, container that holds new Toast components will be automatically created in your HTML page and every time Toast component is being called it will automatically create needed HTML markup and insert into special container on the page. 
+Download [`toast.module.js`](toast.module.js), if you use modules in your code, or [`toast.js`](toast.js) if you use plain JS files approach. Link it in your HTML document, or in case you use modules you can import it in you main entery point file. You don't need to create any HTML markup for this toast in your HTML. When Toast component intialized, by calling Toast constructor, container that holds new Toast components will be automatically created on your HTML page and every time Toast component is being called it will automatically create needed HTML markup and insert it into a special container on the page. 
 
 **Examples:**
 

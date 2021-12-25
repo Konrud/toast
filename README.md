@@ -6,7 +6,7 @@ Toast component (using HTML, CSS, JS)
 
 
 ## Summary
-Toast component can receive either plain text or any HTML markup and can be called
+Toast component accepts either plain text or any HTML markup and can be called
 any time a message should be displayed on the screen.
 
 ## How to use
